@@ -9,6 +9,7 @@ library(lubridate)
 library(anytime)
 library(readr)
 library(yaml)
+library(tidyr)
 
 #### 1: Beginning of script
 
@@ -47,7 +48,6 @@ test_stations_metadata(stations_metadata_df)
 
 
 ### 5: Final volume query: 
-
 source("gql-queries/vol_qry.r")
 
 stations_metadata_df %>% 
@@ -60,10 +60,9 @@ stations_metadata_df %>%
   ) %>% 
   GQL(., .url = configs$vegvesen_url) %>%
   transform_volumes() %>% 
-  ggplot(aes(x=from, y=volume)) + 
+  ggplot(aes(x="from", y="volume")) + 
   geom_line() + 
   theme_classic()
-
 
 
 
